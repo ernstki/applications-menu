@@ -24,6 +24,9 @@ private extern const string PKGDATADIR;
 public class Slingshot.Indicator : Wingpanel.Indicator {
     private const string KEYBINDING_SCHEMA = "org.pantheon.desktop.gala.keybindings";
     private const string GALA_BEHAVIOR_SCHEMA = "org.pantheon.desktop.gala.behavior";
+    // some good options are system-search-symbolic (the default),
+    // emblem-system-symbolic (a gear), view-more-symbolic (horizontal dots)
+    private const string SLINGSHOT_ICON = "content-loading-symbolic";
 
     private DBusService? dbus_service = null;
     private Gtk.Grid? indicator_grid = null;
@@ -79,14 +82,10 @@ public class Slingshot.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (indicator_grid == null) {
-            var indicator_label = new Gtk.Label (_("Applications"));
-            indicator_label.vexpand = true;
-
-            var indicator_icon = new Gtk.Image.from_icon_name ("system-search-symbolic", Gtk.IconSize.MENU);
+            var indicator_icon = new Gtk.Image.from_icon_name (SLINGSHOT_ICON, Gtk.IconSize.MENU);
 
             indicator_grid = new Gtk.Grid ();
             indicator_grid.attach (indicator_icon, 0, 0, 1, 1);
-            indicator_grid.attach (indicator_label, 1, 0, 1, 1);
             update_tooltip ();
 
             if (keybinding_settings != null) {
